@@ -202,6 +202,8 @@ python evaluation.py \
   --output-json eval_report.json
 ```
 
+`We provide the full evaluation results in https://huggingface.co/datasets/Tuyuanpeng/Reason2Gen_Full/blob/main/eval_merged.csv` 
+
 If multiple prediction folders are provided, the script reports each run separately and also reports the mean accuracy across runs.
 For `benchmark_root` mode, the loader expects a directory structure like:
 
