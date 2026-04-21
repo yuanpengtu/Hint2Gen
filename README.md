@@ -52,16 +52,6 @@ We provide the benchmark data and released outputs on Hugging Face:
   All method outputs on our largest evaluation set:
   https://huggingface.co/datasets/Tuyuanpeng/Output_Reason2Gen
 
-## Repository structure
-
-This repository currently focuses on the **hint generation** side of the pipeline.
-
-- [hint_generate.py](./hint_generate.py): entrypoint for code-structured hint generation
-- `reason2gen_hint/`: refactored implementation split into smaller modules
-- [evaluation.py](./evaluation.py): a lightweight helper for inspecting released datasets
-
-The `hint_generate.py` pipeline generates SVG/HTML-style visual hints using **GPT-5.4** and is intended for building or reproducing the hint-construction stage described in the paper.
-
 ## Code structure
 
 The repository is organized as a small package built around the **official OpenAI Python client**.
