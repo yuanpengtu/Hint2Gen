@@ -1,0 +1,11 @@
+openai
+google-genai
+pillow
+numpy
+pandas
+loguru
+beautifulsoup4
+lxml
+opencv-python
+datasets
+pyarrow
