@@ -335,17 +335,6 @@ For each sample, the pipeline writes:
 - `--api-keys`: one or more OpenAI API keys
 - `--base-url`: optional OpenAI-compatible base URL
 
-## Relation to the paper
-
-This repository currently covers the **code-structured hint generation** part of the overall Hint2Gen pipeline.
-
-In the paper, these structured hints are used in two ways:
-
-- as auxiliary inference-time inputs that improve existing generation models even **without retraining**
-- as conditioning signals for training **Hint2Gen**, our FLUX.1 Kontext-based model
-
-So this repository should be viewed as the released hint-construction component, not yet as the full training code for all paper experiments.
-
 ## Citation
 
 If you use this project or the benchmark, please cite the paper:
