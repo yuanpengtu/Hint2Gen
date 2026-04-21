@@ -60,22 +60,6 @@ This folder currently focuses on the **hint generation** side of the pipeline.
 
 The released `hint_generate.py` pipeline generates SVG/HTML-style visual hints using **GPT-5.4** and is intended for building or reproducing the hint-construction stage described in the paper.
 
-## Public code notes
-
-The original internal script was a very large single Python file and used an internal ByteDance API gateway.  
-For this public GitHub version, we refactored it into a small package and switched it to the **official OpenAI Python client**.
-
-Current package structure:
-
-- `reason2gen_hint/cli.py`: command-line interface
-- `reason2gen_hint/client.py`: official OpenAI API wrapper
-- `reason2gen_hint/prompts.py`: prompt templates
-- `reason2gen_hint/vision.py`: image registration, diff-map generation, edge extraction, and grid overlays
-- `reason2gen_hint/svg_ops.py`: SVG parsing, rendering, and shape scaling
-- `reason2gen_hint/datasets.py`: dataset loaders for Hugging Face, JSON, and parquet
-- `reason2gen_hint/pipeline.py`: end-to-end generation pipeline
-- `reason2gen_hint/config.py`: runtime defaults
-
 ## Installation
 
 Python 3.10+ is recommended.
@@ -168,7 +152,7 @@ python hint_generate.py \
 
 ## Evaluation
 
-Following the paper, evaluation uses an **LLM-as-a-judge** protocol with **GPT-5** as the evaluator.
+Evaluation uses an **LLM-as-a-judge** protocol with **GPT-5** as the evaluator.
 For each sample, the evaluator receives:
 
 - the question / problem image
