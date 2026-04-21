@@ -1,6 +1,6 @@
 # Hint2Gen
 
-Official repository draft for **Hint2Gen: Bridging Understanding and Generation via Code-structured Hints**.
+Official repository for **Hint2Gen: Bridging Understanding and Generation via Code-structured Hints**.
 
 Hint2Gen studies a core failure mode of current unified image generation models: they often fail on **reasoning-intensive visual tasks** even when VLMs or LLMs can solve the same tasks symbolically.  
 Our key idea is to introduce **code-structured visual hints**, represented as lightweight **SVG/HTML overlays**, to bridge high-level reasoning and pixel-space image generation.
@@ -15,6 +15,8 @@ The project contains two tightly connected parts:
 - **Reason2Gen**: a benchmark for reasoning-aware image generation and editing
 
 Instead of treating reasoning as pure text, Hint2Gen uses structured visual programs as intermediate scaffolds. These hints explicitly encode reasoning steps on the image plane and make it easier for a generative model to produce spatially coherent, logically correct outputs.
+
+> We are actively working on **Hint2Gen v2**, a next-stage version aimed at endowing the model with stronger explicit thinking and reasoning capabilities. More updates will be released soon. Stay tuned.
 
 According to the paper, Reason2Gen contains:
 
@@ -50,15 +52,30 @@ We provide the benchmark data and released outputs on Hugging Face:
   All method outputs on our largest evaluation set:
   https://huggingface.co/datasets/Tuyuanpeng/Output_Reason2Gen
 
-## What this GitHub folder currently contains
+## Repository structure
 
-This folder currently focuses on the **hint generation** side of the pipeline.
+This repository currently focuses on the **hint generation** side of the pipeline.
 
 - [hint_generate.py](./hint_generate.py): entrypoint for code-structured hint generation
 - `reason2gen_hint/`: refactored implementation split into smaller modules
 - [evaluation.py](./evaluation.py): a lightweight helper for inspecting released datasets
 
-The released `hint_generate.py` pipeline generates SVG/HTML-style visual hints using **GPT-5.4** and is intended for building or reproducing the hint-construction stage described in the paper.
+The `hint_generate.py` pipeline generates SVG/HTML-style visual hints using **GPT-5.4** and is intended for building or reproducing the hint-construction stage described in the paper.
+
+## Code structure
+
+The repository is organized as a small package built around the **official OpenAI Python client**.
+
+Current package structure:
+
+- `reason2gen_hint/cli.py`: command-line interface
+- `reason2gen_hint/client.py`: official OpenAI API wrapper
+- `reason2gen_hint/prompts.py`: prompt templates
+- `reason2gen_hint/vision.py`: image registration, diff-map generation, edge extraction, and grid overlays
+- `reason2gen_hint/svg_ops.py`: SVG parsing, rendering, and shape scaling
+- `reason2gen_hint/datasets.py`: dataset loaders for Hugging Face, JSON, and parquet
+- `reason2gen_hint/pipeline.py`: end-to-end generation pipeline
+- `reason2gen_hint/config.py`: runtime defaults
 
 ## Installation
 
@@ -84,7 +101,7 @@ export OPENAI_BASE_URL=https://your-compatible-endpoint/v1
 
 ## Model and API
 
-This public version uses the official `openai` Python package.
+This repository uses the official `openai` Python package.
 
 The default hint-generation model is:
 
@@ -152,7 +169,7 @@ python hint_generate.py \
 
 ## Evaluation
 
-Evaluation uses an **LLM-as-a-judge** protocol with **GPT-5** as the evaluator.
+Following the paper, evaluation uses an **LLM-as-a-judge** protocol with **GPT-5** as the evaluator.
 For each sample, the evaluator receives:
 
 - the question / problem image
@@ -248,7 +265,7 @@ python evaluation.py \
   --model gemini-2.5-pro
 ```
 
-This Gemini evaluation path uses the official Google API client rather than the earlier internal ByteDance gateway.
+This Gemini evaluation path uses the official Google API client.
 
 ## Supported input formats
 
@@ -318,6 +335,16 @@ For each sample, the pipeline writes:
 - `--api-keys`: one or more OpenAI API keys
 - `--base-url`: optional OpenAI-compatible base URL
 
+## Relation to the paper
+
+This repository currently covers the **code-structured hint generation** part of the overall Hint2Gen pipeline.
+
+In the paper, these structured hints are used in two ways:
+
+- as auxiliary inference-time inputs that improve existing generation models even **without retraining**
+- as conditioning signals for training **Hint2Gen**, our FLUX.1 Kontext-based model
+
+So this repository should be viewed as the released hint-construction component, not yet as the full training code for all paper experiments.
 
 ## Citation
 
